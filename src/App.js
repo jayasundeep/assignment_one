@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import ButtonOptions from './components/ButtonOptions';
 import ClipBoardControls from './components/ClipBoardControl';
