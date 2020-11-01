@@ -3,7 +3,7 @@ import './App.css';
 import ButtonOptions from './components/ButtonOptions';
 import ClipBoardControls from './components/ClipBoardControl';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <p> components comes here! </p>

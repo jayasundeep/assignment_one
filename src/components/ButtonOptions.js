@@ -1,48 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { setCheckBox, setRadioVal } from '../actions/states';
 
 class ButtonOptions extends React.Component {
-    state = {
-        checkBox : [],
-        radioButtonValue : ""
-    }
-
+    /* constructor(props){
+        super(props);
+    } */
     handleCheckBox = (e) => {
         // console.log(e.target.value);
         const val = e.target.value;
-        let present;
-        let temp = [];
-        this.state.checkBox.map((x) => {
-            if(x === val){
-                present = true;
-                return x;
-            }else{
-                temp.push(x);
-                return x;
-            }
-        })
-
-        if(!present){
-            temp.push(val)
-            this.setState({
-                checkBox : temp
-            })
-        }else{
-            this.setState({
-                checkBox : temp
-            })
-        }
+        this.props.onSetCheckBox(val);
+        // console.log(val);
     }
 
     handleRadioButton = (e) => {
         const val = e.target.value;
-        this.setState({
-            radioButtonValue : val
-        });
+        this.props.onSetRadioVal(val);
+        // console.log(val);
     }
 
     onSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        // console.log(this.props.states);
     }
 
     render() {
@@ -52,7 +32,7 @@ class ButtonOptions extends React.Component {
                     <div>
                         <input 
                             type="checkbox" 
-                            checked={this.state.checkBox.A}
+                            checked={!!this.props.states.checkBox.includes('A')}
                             value="A"
                             onChange={this.handleCheckBox}
                         />
@@ -62,7 +42,7 @@ class ButtonOptions extends React.Component {
                     <div>
                         <input 
                             type="checkbox" 
-                            checked={this.state.checkBox.B}
+                            checked={!!this.props.states.checkBox.includes('B')}
                             value="B"
                             onChange={this.handleCheckBox}
                         />
@@ -72,7 +52,7 @@ class ButtonOptions extends React.Component {
                     <div>
                         <input 
                             type="checkbox" 
-                            checked={this.state.checkBox.C}
+                            checked={!!this.props.states.checkBox.includes('C')}
                             value="C"
                             onChange={this.handleCheckBox}
                         />
@@ -84,6 +64,7 @@ class ButtonOptions extends React.Component {
                             type="radio" 
                             value="Yes"
                             name="agree"
+                            checked={this.props.states.radioButtonValue === "Yes"}
                             onChange={this.handleRadioButton}
                         />
                         <label> Yes </label>
@@ -94,6 +75,7 @@ class ButtonOptions extends React.Component {
                             type="radio" 
                             value="No"
                             name="agree"
+                            checked={this.props.states.radioButtonValue === "No"}
                             onChange={this.handleRadioButton}
                         />
                         <label> No </label>
@@ -104,6 +86,7 @@ class ButtonOptions extends React.Component {
                             type="radio" 
                             value="Neutral"
                             name="agree"
+                            checked={this.props.states.radioButtonValue === "Neutral"}
                             onChange={this.handleRadioButton}
                         />
                         <label> Neutral </label>
@@ -116,4 +99,17 @@ class ButtonOptions extends React.Component {
     }
 }
 
-export default ButtonOptions;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSetCheckBox : (val) => dispatch(setCheckBox(val)), 
+        onSetRadioVal : (val) => dispatch(setRadioVal(val))
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        states : state.states 
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonOptions);
