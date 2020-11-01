@@ -10,11 +10,18 @@ class ClipBoardControl extends React.Component {
         navigator.clipboard.writeText(statesJsonString);
     }
     onApplyState = () => {
-        const statesJsonObj = JSON.parse(document.getElementById('apply_state_text').value);
-        statesJsonObj.checkBox.map((x) => {
-            this.props.onSetCheckBox(x)
-        });
-        this.props.onSetRadioVal(statesJsonObj.radioButtonValue);
+        const stateString = document.getElementById('apply_state_text').value;
+        const statesJsonObj = stateString ? JSON.parse(stateString) : {};
+        if(statesJsonObj.checkBox){
+            statesJsonObj.checkBox.map((x) => {
+                if(!this.props.states.checkBox.includes(x)){
+                    this.props.onSetCheckBox(x)
+                }
+            });
+        }
+        if(statesJsonObj.radioButtonValue){
+            this.props.onSetRadioVal(statesJsonObj.radioButtonValue);
+        }
         // document.getElementById('radio_agree').value = statesJsonObj.radioButtonValue;
         // $('#radio_agree').prop('checked', true).trigger('change');
     }
