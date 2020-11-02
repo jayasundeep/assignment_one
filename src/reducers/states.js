@@ -30,11 +30,12 @@ const statesReducer = (state = defaultStates, action = {}) => {
                 };
             }else{
                 return {
+                    ...state,
                     checkBox : temp
                 };
             }
         case 'SET_RADIO_BTN':
-            console.log(action);
+            // console.log(action);
             return {
                 ...state,
                 radioButtonValue : action.val
